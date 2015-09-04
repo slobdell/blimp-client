@@ -1,0 +1,38 @@
+the shit in pythono for camera should be exactly the same as android stuff.
+
+MAESTRO:
+-settings file with organization_id, client_id, access_token
+-GET request to my web app
+-keep requesting until I get the info
+-now kick off webserver, camera control module if settings dictate, celery
+
+CAMERA_CONTROL_MODULE
+-frame gathering
+-image resizing
+-publishing to pubnub
+
+Web server should (ImageMediator):
+-accept b64 encoded quality images during picture taking, send to celery
+
+Celery workers should:
+-asynchronously upload images to amazon, send text messages to users
+
+SERVO_CONTROLLER
+-publishing to pubnub
+
+
+
+
+blimp_client
+    -common
+        -communicator
+    -camera_control
+        -camera_reader
+        -image_resizer
+    -image_mediator
+        -image_uploader
+        -celery_stuff
+        -watermarking
+    -servo_controller
+        -listener.py
+        -servo_manipulator.py
