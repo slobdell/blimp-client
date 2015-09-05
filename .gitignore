@@ -1,3 +1,5 @@
 *.un~
 *.pyc
 .virtualenv
+blimp_client/latest_company_settings.json
+.virtualenv
