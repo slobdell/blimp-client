@@ -15,8 +15,11 @@ def get_client_settings():
 
 def get_latest_company_settings():
     filename = APP_SETTINGS["COMPANY_SETTINGS_FILE"]
-    with open(filename, "rb") as f:
-        settings = json.loads(f.read())
+    try:
+        with open(filename, "rb") as f:
+            settings = json.loads(f.read())
+    except IOError:
+        settings = {}
     return settings
 
 APP_SETTINGS = get_app_settings()
