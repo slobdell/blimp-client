@@ -22,11 +22,7 @@ class ActionListener(object):
         self.pubnub.subscribe(LISTEN_CHANNEL, self.callback)
 
     def callback(self, message, channel):
+        # TODO update variable names, not necessary a phone numebr here
         if message['command'] == Constants.CMD_TAKE_PICTURE:
             phone_number = message['value']
             self.blimp_runner.amend_phone_number(phone_number)
-        elif message['command'] in (Constants.CMD_START, Constants.CMD_STOP):
-            self.servo_controller.action_from_strings(
-                message['command'],
-                message['value']
-            )

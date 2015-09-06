@@ -1,5 +1,12 @@
 from PIL import Image, ImageEnhance
 from cStringIO import StringIO
+import requests
+
+from blimp_client.global_settings import COMPANY_SETTINGS
+
+
+class LazyCache(object):
+    watermark = None
 
 
 def reduce_opacity(im, opacity):
@@ -52,6 +59,12 @@ def _pil_image_to_jpeg_bytes(pil_image):
 def default_watermark(jpeg_bytes):
     image_buffer = StringIO(jpeg_bytes)
     pil_image = Image.open(image_buffer)
-    mark = Image.open('watermark.png')
+
+    if LazyCache.watermark is None:
+        watermark_bytes = requests.get(COMPANY_SETTINGS["watermark_url"]).content
+        watermark_buffer = StringIO(watermark_bytes)
+        LazyCache.watermark = Image.open(watermark_buffer)
+
+    mark = LazyCache.watermark
     updated_image = watermark(pil_image, mark, 'scale', 1.0)
     return _pil_image_to_jpeg_bytes(updated_image)
