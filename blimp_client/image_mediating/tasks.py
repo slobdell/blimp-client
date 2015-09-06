@@ -13,8 +13,8 @@ from .image_uploader import ImageUploader
 app = Celery('this_can_be_anything', broker='redis://localhost:6379/0')
 BUCKET_NAME = "public-blimp"
 # TODO move to settings
-PUBNUB_PUBLISH_KEY = os.environ['PUBNUB_PUBLISH_KEY']
-PUBNUB_SUBSCRIBE_KEY = os.environ['PUBNUB_SUBSCRIBE_KEY']
+PUBNUB_PUBLISH_KEY = COMPANY_SETTINGS["pubnub_publish_key"]
+PUBNUB_SUBSCRIBE_KEY = COMPANY_SETTINGS["pubnub_subscribe_key"]
 
 
 @app.task(name="some_unique_name")

@@ -1,10 +1,11 @@
 import base64
-import os
 
 from pubnub import Pubnub
 
-PUBNUB_PUBLISH_KEY = os.environ['PUBNUB_PUBLISH_KEY']
-PUBNUB_SUBSCRIBE_KEY = os.environ['PUBNUB_SUBSCRIBE_KEY']
+from blimp_client.global_settings import COMPANY_SETTINGS
+
+PUBNUB_PUBLISH_KEY = COMPANY_SETTINGS["pubnub_publish_key"]
+PUBNUB_SUBSCRIBE_KEY = COMPANY_SETTINGS["pubnub_subscribe_key"]
 
 PUBLISH_CHANNEL = "jpeg_stream"
 

@@ -13,8 +13,10 @@ from global_settings import APP_SETTINGS, COMPANY_SETTINGS, CLIENT_SETTINGS
 
 def populate_company_settings():
     access_token = CLIENT_SETTINGS["access_token"]
+    unique_identifier = CLIENT_SETTINGS["unique_identifier"]
     base_url = APP_SETTINGS["OVERLORD_URL"]
-    full_url = "%s/api/my_company/?access_token=%s" % (base_url, access_token)
+    unformatted_url = "%s/api/me/?access_token=%s&unique_identifier=%s"
+    full_url = unformatted_url % (base_url, access_token, unique_identifier)
     response = requests.get(full_url)
     response.raise_for_status()
     company_data = json.loads(response.content)

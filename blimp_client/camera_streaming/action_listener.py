@@ -1,10 +1,11 @@
-import os
 from pubnub import Pubnub
+
+from blimp_client.global_settings import COMPANY_SETTINGS
 
 from .constants import Constants
 
-PUBNUB_PUBLISH_KEY = os.environ['PUBNUB_PUBLISH_KEY']
-PUBNUB_SUBSCRIBE_KEY = os.environ['PUBNUB_SUBSCRIBE_KEY']
+PUBNUB_PUBLISH_KEY = COMPANY_SETTINGS["pubnub_publish_key"]
+PUBNUB_SUBSCRIBE_KEY = COMPANY_SETTINGS["pubnub_subscribe_key"]
 # TODO: need to incorporate client ID and all that shit
 LISTEN_CHANNEL = "camera_commands"
 
