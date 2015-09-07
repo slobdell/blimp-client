@@ -1,3 +1,5 @@
+# TODO no one listening on this channel right now
+
 class ServoController(object):
 
     def __init__(self):

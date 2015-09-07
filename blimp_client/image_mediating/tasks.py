@@ -7,6 +7,7 @@ from pubnub import Pubnub
 from blimp_client.global_settings import APP_SETTINGS, COMPANY_SETTINGS
 
 from .image_texter import ImageTexter
+from .image_emailer import ImageEmailer
 from .watermark import default_watermark
 from .image_uploader import ImageUploader
 
@@ -34,6 +35,8 @@ def send_photo(filename, phone_num_or_email):
     image_url = upload_image(jpeg_string, phone_num_or_email)
     print image_url
 
+    print phone_num_or_email
+
     if COMPANY_SETTINGS["web_flow"]:
         # TODO vars need renaming
         pubnub = Pubnub(
@@ -43,10 +46,10 @@ def send_photo(filename, phone_num_or_email):
         pubnub.publish(phone_num_or_email, image_url)
 
     elif COMPANY_SETTINGS["sms_photos"]:
-        ImageTexter().text_image("+14156606378", image_url)
+        ImageTexter().text_image(phone_num_or_email, image_url)
 
     elif COMPANY_SETTINGS["email_photos"]:
-        pass
+        ImageEmailer().email_image(phone_num_or_email, image_url)
     os.remove(full_path)
 
 

@@ -1,5 +1,6 @@
 from Queue import Queue
 import os
+import time
 import uuid
 
 from blimp_client.common.image_resizer import ImageResizer
@@ -22,7 +23,9 @@ def init_camera(camera_manager):
     # us
     print "Killing interfering camera processes..."
     os.popen("killall PTPCamera")
+    time.sleep(2)  # no idea if this helps at all
     while num_retries < MAX_CONNECTION_RETRIES:
+        print "Trying to initialize camera..."
         success = camera_manager.initialize()
         if success:
             print "Successfully connected to the camera"

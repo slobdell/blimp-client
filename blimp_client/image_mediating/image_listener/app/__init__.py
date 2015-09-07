@@ -2,6 +2,7 @@ import base64
 import os
 import uuid
 
+from flask import jsonify
 from flask import Flask
 from flask import request
 # from flask import redirect
@@ -10,6 +11,8 @@ from flask import request
 
 from blimp_client.image_mediating.tasks import send_photo
 from blimp_client.global_settings import APP_SETTINGS
+from blimp_client.global_settings import CHANNEL_PREFIX
+from blimp_client.global_settings import COMPANY_SETTINGS
 
 app = Flask(__name__)
 # from app import views
@@ -28,6 +31,13 @@ def _allowed_file(filename):
 
 @app.route("/")
 def index():
+    return jsonify({
+        "pubnub_meta": {
+            "pubnub_publish_key": COMPANY_SETTINGS["pubnub_publish_key"],
+            "pubnub_subscribe_key": COMPANY_SETTINGS["pubnub_subscribe_key"],
+            "prefix": CHANNEL_PREFIX,
+        }
+    })
     return "Hello world"
 
 

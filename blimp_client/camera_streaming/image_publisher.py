@@ -2,12 +2,12 @@ import base64
 
 from pubnub import Pubnub
 
-from blimp_client.global_settings import COMPANY_SETTINGS
+from blimp_client.global_settings import CHANNEL_PREFIX, COMPANY_SETTINGS
 
 PUBNUB_PUBLISH_KEY = COMPANY_SETTINGS["pubnub_publish_key"]
 PUBNUB_SUBSCRIBE_KEY = COMPANY_SETTINGS["pubnub_subscribe_key"]
 
-PUBLISH_CHANNEL = "jpeg_stream"
+PUBLISH_CHANNEL = CHANNEL_PREFIX + "jpeg_stream"
 
 
 class ImagePublisher(object):

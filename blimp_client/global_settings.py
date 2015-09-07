@@ -25,3 +25,4 @@ def get_latest_company_settings():
 APP_SETTINGS = get_app_settings()
 CLIENT_SETTINGS = get_client_settings()
 COMPANY_SETTINGS = get_latest_company_settings()
+CHANNEL_PREFIX = "%s:%s:" % (COMPANY_SETTINGS.get("client_company_id", ""), COMPANY_SETTINGS.get("raspberry_client_id", ""))
