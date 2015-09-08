@@ -31,7 +31,14 @@ def _allowed_file(filename):
 
 @app.route("/")
 def index():
+    image_width = COMPANY_SETTINGS["image_sellable_width"]
+    if not COMPANY_SETTINGS["sell_photos"]:
+        image_width = COMPANY_SETTINGS["image_picure_view_width"]
+
     return jsonify({
+        "image_meta": {
+            "image_width": image_width
+        },
         "pubnub_meta": {
             "pubnub_publish_key": COMPANY_SETTINGS["pubnub_publish_key"],
             "pubnub_subscribe_key": COMPANY_SETTINGS["pubnub_subscribe_key"],

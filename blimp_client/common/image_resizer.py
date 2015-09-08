@@ -30,7 +30,7 @@ class ImageResizer(object):
         return image_buffer.read()
 
     def resize_to_width(self, target_width):
-        if self._width < target_width:
+        if self._width <= target_width:
             return self._image_to_raw_data(self._image)
 
         target_height = self._infer_target_height(target_width)

@@ -6,9 +6,13 @@ from celery import Celery
 
 from blimp_client.common.image_resizer import ImageResizer
 from blimp_client.global_settings import APP_SETTINGS
+from blimp_client.global_settings import COMPANY_SETTINGS
 
 UPLOAD_FOLDER = APP_SETTINGS["UPLOAD_FOLDER"]
-FINISHED_RESIZE_WIDTH = 1024
+
+FINISHED_RESIZE_WIDTH = COMPANY_SETTINGS["image_picture_view_width"]
+if COMPANY_SETTINGS["sell_photos"]:
+    FINISHED_RESIZE_WIDTH = COMPANY_SETTINGS["image_sellable_width"]
 
 app = Celery('camera_streaming_tasks', broker='redis://localhost:6379/0')
 
