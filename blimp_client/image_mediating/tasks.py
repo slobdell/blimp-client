@@ -5,6 +5,7 @@ from celery import Celery
 from pubnub import Pubnub
 
 from blimp_client.common.image_resizer import ImageResizer
+from blimp_client.common.image_rotater import ImageRotater
 from blimp_client.global_settings import APP_SETTINGS, COMPANY_SETTINGS
 
 from .image_texter import ImageTexter
@@ -44,6 +45,10 @@ def send_photo(filename, phone_num_or_email):
     full_path = "%s%s" % (APP_SETTINGS["UPLOAD_FOLDER"], filename)
     with open(full_path, "rb") as f:
         jpeg_string = f.read()
+
+    jpeg_string = ImageRotater.from_raw_string(
+        jpeg_string
+    ).rotate(COMPANY_SETTINGS["picture_rotation"])
 
     watermark_jpeg_string = ImageResizer.from_raw_string(
         jpeg_string
