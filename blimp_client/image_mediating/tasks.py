@@ -4,6 +4,7 @@ import uuid
 from celery import Celery
 from pubnub import Pubnub
 
+from blimp_client.common.facebook_rest_client import FacebookRestClient
 from blimp_client.common.image_resizer import ImageResizer
 from blimp_client.common.image_rotater import ImageRotater
 from blimp_client.global_settings import APP_SETTINGS, COMPANY_SETTINGS
@@ -68,9 +69,30 @@ def send_photo(filename, phone_num_or_email):
 
     print phone_num_or_email
 
+    facebook_image_url = _possibly_post_to_facebook(watermark_image_url)
+
     if COMPANY_SETTINGS["sell_photos"]:
         watermark_image_url = _sell_photo_url(watermark_image_url)
 
+    image_url_for_user = facebook_image_url or watermark_image_url
+    _send_image_back_to_user(phone_num_or_email, image_url_for_user)
+
+    os.remove(full_path)
+
+
+def _possibly_post_to_facebook(watermark_image_url):
+    if COMPANY_SETTINGS["facebook_enabled"]:
+        access_token = COMPANY_SETTINGS["facebook_access_token"]
+        caption = ""
+        if COMPANY_SETTINGS["sell_photos"]:
+            sales_page_url = _sell_photo_url(watermark_image_url)
+            caption = "View the high resolution, non-watermarked version here: %s" % sales_page_url
+        FacebookRestClient(access_token).post_photo(watermark_image_url, caption)
+        return "http://facebook.com/%s" % COMPANY_SETTINGS["facebook_service_id"]
+    return ''
+
+
+def _send_image_back_to_user(phone_num_or_email, watermark_image_url):
     if COMPANY_SETTINGS["web_flow"]:
         # TODO vars need renaming
         pubnub = Pubnub(
@@ -84,7 +106,6 @@ def send_photo(filename, phone_num_or_email):
 
     elif COMPANY_SETTINGS["email_photos"]:
         ImageEmailer().email_image(phone_num_or_email, watermark_image_url)
-    os.remove(full_path)
 
 
 def _sell_photo_url(watermark_image_url):

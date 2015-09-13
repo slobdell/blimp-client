@@ -2,3 +2,4 @@
 *.pyc
 blimp_client/latest_company_settings.json
 .virtualenv
+blimp_client/dump.rdb
