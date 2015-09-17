@@ -39,13 +39,23 @@ def start_celery():
 
 
 def start_web_server():
-    command = "python -m image_mediating.image_listener.run"
+    command = "python -m http_listener.run"
     process = Popen(shlex.split(command))
     return process.pid
 
 
 if __name__ == "__main__":
-    populate_company_settings()
+    while True:
+        try:
+            populate_company_settings()
+            break
+        except KeyboardInterrupt:
+            sys.exit(0)
+            pass
+        except Exception as e:
+            # generally means no network
+            print e
+            time.sleep(5)
 
     process_ids = []
     if COMPANY_SETTINGS['gphoto_camera_enabled']:

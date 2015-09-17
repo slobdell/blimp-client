@@ -45,7 +45,6 @@ def index():
             "prefix": CHANNEL_PREFIX,
         }
     })
-    return "Hello world"
 
 
 @app.route("/picture/", methods=['POST'])

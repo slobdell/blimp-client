@@ -28,7 +28,7 @@ def send_photo_to_self(filename, recipient):
     ).resize_to_width(FINISHED_RESIZE_WIDTH)
 
     b64_jpeg_string = base64.urlsafe_b64encode(resized_jpeg_string)
-    post_url = "%s/picture/" % APP_SETTINGS["IMAGE_LISTEN_URL"]
+    post_url = "%s/picture/" % APP_SETTINGS["HTTP_LISTEN_URL"]
     post_data = {
         "b64jpeg": b64_jpeg_string,
         "phone_num_or_email": recipient

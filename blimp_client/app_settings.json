@@ -1,6 +1,6 @@
 {
     "OVERLORD_URL": "http://social-blimp.herokuapp.com/",
-    "IMAGE_LISTEN_URL": "http://localhost:6969",
-    "UPLOAD_FOLDER": "./image_mediating/image_listener/uploads/",
+    "HTTP_LISTEN_URL": "http://localhost:6969",
+    "UPLOAD_FOLDER": "./http_listener/uploads/",
     "COMPANY_SETTINGS_FILE": "latest_company_settings.json"
 }
