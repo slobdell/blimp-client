@@ -33,7 +33,7 @@ def _allowed_file(filename):
 def index():
     image_width = COMPANY_SETTINGS["image_sellable_width"]
     if not COMPANY_SETTINGS["sell_photos"]:
-        image_width = COMPANY_SETTINGS["image_picure_view_width"]
+        image_width = COMPANY_SETTINGS["image_picture_view_width"]
 
     return jsonify({
         "image_meta": {
@@ -53,5 +53,6 @@ def receive_picture():
     full_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     with open(full_path, "w+") as f:
         f.write(base64.urlsafe_b64decode(request.form['b64jpeg'].encode("ascii")))
+    print "Wrote file to %s" % full_path
     send_photo.delay(filename, request.form["phone_num_or_email"])
     return "worked"

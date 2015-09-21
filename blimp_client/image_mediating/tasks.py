@@ -43,6 +43,7 @@ def company_salted_uuid(uuid_str):
 @app.task(name="send_photo")
 def send_photo(filename, phone_num_or_email):
     """ Assume the input image is for sell width """
+    print "Starting to send photo to end user"
     full_path = "%s%s" % (APP_SETTINGS["UPLOAD_FOLDER"], filename)
     with open(full_path, "rb") as f:
         jpeg_string = f.read()

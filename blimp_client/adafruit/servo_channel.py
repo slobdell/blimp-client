@@ -14,6 +14,9 @@ class ServoChannel(object):
         self._pwm_driver.setPWMFreq(60)
 
     def set_intensity(self, percent):
+        if percent is None:
+            # hack
+            return
         if abs(percent) > 1.0:
             raise TypeError("percent should be in 0.0..1.0")
         if percent < 0:
@@ -26,6 +29,4 @@ class ServoChannel(object):
             servo_value = self.neutral_val + pwm_intensity
         elif percent == 0:
             servo_value = self.neutral_val
-        if self.channel_number == 0:
-            print int(servo_value)
         self._pwm_driver.setPWM(self.channel_number, 0, int(servo_value))

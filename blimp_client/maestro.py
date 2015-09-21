@@ -10,6 +10,8 @@ import requests
 
 from global_settings import APP_SETTINGS, COMPANY_SETTINGS, CLIENT_SETTINGS
 
+VIRTUALENV_PREFIX = "../.virtualenv/bin/"
+
 
 def populate_company_settings():
     access_token = CLIENT_SETTINGS["access_token"]
@@ -33,19 +35,19 @@ def start_redis():
 
 
 def start_celery():
-    command = "celery worker --autoreload --config=celeryconfig --concurrency=2"
+    command = VIRTUALENV_PREFIX + "celery worker --autoreload --config=celeryconfig --concurrency=2"
     process = Popen(shlex.split(command))
     return process.pid
 
 
 def start_web_server():
-    command = "python -m http_listener.run"
+    command = VIRTUALENV_PREFIX + "python -m http_listener.run"
     process = Popen(shlex.split(command))
     return process.pid
 
 
 def start_servos():
-    command = "python -m servo_controlling.start_listening"
+    command = VIRTUALENV_PREFIX + "python -m servo_controlling.start_listening"
     process = Popen(shlex.split(command))
     return process.pid
 
