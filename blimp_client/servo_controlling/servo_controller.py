@@ -1,5 +1,6 @@
 # TODO no one listening on this channel right now
 
+
 class ServoController(object):
 
     def __init__(self):
@@ -19,32 +20,32 @@ class ServoController(object):
             }
         }
 
-    def action_from_strings(self, start_or_stop, direction):
+    def action_from_strings(self, start_or_stop, direction, intensity):
         func = self.ACTION_DICT[start_or_stop][direction]
         func()
 
-    def start_up(self):
+    def start_up(self, intensity):
         print "start up"
 
-    def start_down(self):
+    def start_down(self, intensity):
         print "start down"
 
-    def start_left(self):
+    def start_left(self, intensity):
         print "start left"
 
-    def start_right(self):
+    def start_right(self, intensity):
         print "start right"
 
-    def stop_right(self):
+    def stop_right(self, intensity):
         print "stop right"
 
-    def stop_left(self):
+    def stop_left(self, intensity):
         print "stop left"
 
-    def stop_up(self):
+    def stop_up(self, intensity):
         print "stop up"
 
-    def stop_down(self):
+    def stop_down(self, intensity):
         print "stop down"
 
     def stop_all(self):

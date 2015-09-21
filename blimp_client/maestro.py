@@ -44,6 +44,12 @@ def start_web_server():
     return process.pid
 
 
+def start_servos():
+    command = "python -m servo_controlling.start_listening"
+    process = Popen(shlex.split(command))
+    return process.pid
+
+
 if __name__ == "__main__":
     while True:
         try:
@@ -68,6 +74,7 @@ if __name__ == "__main__":
     process_ids.append(start_redis())
     process_ids.append(start_celery())
     process_ids.append(start_web_server())
+    process_ids.append(start_servos())
 
     def kill_handler(signum, frame):
         print "KILLING CHILD PROCESSES FROM KILL CMD"

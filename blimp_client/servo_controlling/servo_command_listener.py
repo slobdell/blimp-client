@@ -2,18 +2,15 @@ from pubnub import Pubnub
 
 from blimp_client.global_settings import CHANNEL_PREFIX, COMPANY_SETTINGS
 
-from .constants import Constants
-
 PUBNUB_PUBLISH_KEY = COMPANY_SETTINGS["pubnub_publish_key"]
 PUBNUB_SUBSCRIBE_KEY = COMPANY_SETTINGS["pubnub_subscribe_key"]
-# TODO: need to incorporate client ID and all that shit
-LISTEN_CHANNEL = CHANNEL_PREFIX + "camera_commands"
+LISTEN_CHANNEL = CHANNEL_PREFIX + "servo_commands"
 
 
-class ActionListener(object):
+class ServoCommandListener(object):
 
-    def __init__(self, camera_streamer):
-        self.camera_streamer = camera_streamer
+    def __init__(self, servo_controller):
+        self.servo_controller = servo_controller
         self.pubnub = Pubnub(
             publish_key=PUBNUB_PUBLISH_KEY,
             subscribe_key=PUBNUB_SUBSCRIBE_KEY,
@@ -23,7 +20,10 @@ class ActionListener(object):
         self.pubnub.subscribe(LISTEN_CHANNEL, self.callback)
 
     def callback(self, message, channel):
-        # TODO update variable names, not necessary a phone numebr here
-        if message['command'] == Constants.CMD_TAKE_PICTURE:
-            phone_number = message['value']
-            self.camera_streamer.amend_phone_number(phone_number)
+        # not the best code for sure...
+        if message['command'] in ('start', 'stop'):
+            self.servo_controller.action_from_strings(
+                message['command'],
+                message['value'],
+                message.get('intensity', 0.0),
+            )
