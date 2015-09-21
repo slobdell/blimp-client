@@ -10,7 +10,7 @@ def start_listening():
     while True:
         # not sure if sleep time matters, I just can't have above stuff go out
         # of scope
-        time.sleep(5)
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

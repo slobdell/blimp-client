@@ -21,9 +21,7 @@ class ServoCommandListener(object):
 
     def callback(self, message, channel):
         # not the best code for sure...
-        if message['command'] in ('start', 'stop'):
             self.servo_controller.action_from_strings(
                 message['command'],
                 message['value'],
-                message.get('intensity', 0.0),
             )
