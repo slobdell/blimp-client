@@ -72,7 +72,9 @@ def send_photo(filename, phone_num_or_email):
 
     try:
         facebook_image_url = _possibly_post_to_facebook(watermark_image_url)
-    except:  # Facebook token has expired
+    except Exception as e:  # Facebook token has expired
+        print "FACEBOOK ACCESS TOKEN HAS LIKELY EXPIRED"
+        print e
         facebook_image_url = None
 
     if COMPANY_SETTINGS["sell_photos"]:
