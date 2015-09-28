@@ -34,3 +34,4 @@ wsgiref==0.1.2
 image==1.4.1
 celery==3.1.18
 redis==2.10.3
+# smbus-cffi  # linux only I'm pretty sure
